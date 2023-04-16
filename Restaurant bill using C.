@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+struct items{
+    char items[50];
+    float price;
+    int qty;
+};
+struct order{
+    char customer [50];
+    char date[30];
+    int numofoders;
+    struct items itm[50];
+};
+void billHeader(char customer[50],char date[30]){
+    printf("\n\n");
+    printf("    \t--CHIRI.Bill--");
+    printf("\n\t-----------------");
+    printf("\nDate: %s",date);
+    printf("\nInvoice to: %s",customer);
+    printf("\n");
+    printf("--------------------------------\n");
+    printf("Items\t\t");
+    printf("Quntity\t\t");
+    printf("Total\t\t");
+    printf("\n---------------------------------");
+    printf("\n");
+}
+void billBody(char item[50],int qty,float price){
+    printf("%s\t\t %d\t\t %.2f\t\t",qty,item,price * qty);
+    printf("\n");
+}
+
+void billtotal(float total){
+printf("\n");
+float dis=0.1*total;
+float netTotal=total-dis;
+float VAT=0.09*netTotal,grandTotal=netTotal+VAT;
+printf("\n-----------------------------------\n");
+printf("\nTotal\t\t:",total);
+printf("\ndiscount @10%\t=\t%.2f %",dis);
+printf("\nVAT tax @0.9%\t=\t%.2f % ",VAT);
+printf("\n-----------------------------------\n");
+printf("Grand Total\t=\t%.2f",grandTotal);
+printf("\n-----------------------------------\n");
+
+}
+int main(){
+    int opt,n;
+    float total;
+    struct order ord;
+   
+    
+    printf(" +++++++CHIRI.RESTAURANT+++++++");
+    printf("\n\n1.Generate Invoice");
+    printf("\n2.Show all invoices");
+    printf("\n3.Search invoice");
+    printf("\n4.EXIT");
+    printf("\n\nEnter your choice:");
+    scanf("%d",&opt);
+    fgetc(stdin);
+    switch(opt){
+        case 1:
+        printf("-Enter the name of the costomer:\n");
+        fgets(ord.customer,50,stdin);
+        ord.customer[strlen(ord.customer-1)];
+        strcpy(ord.date,__DATE__);
+        printf("Enter The number of items\t\n");
+        scanf("%d",&n);
+        for(int i=0;i<n;i++){
+            fgetc(stdin);
+            printf("Enter the name if the item\t\n %d.",i+1);
+            fgets(ord.itm[i].items,20,stdin);
+            ord.itm[i].items[strlen(ord.itm[i].items)-1];
+            printf("Please enter the quntity of the items\t\n");
+            scanf("%d",&ord.itm[i].qty);
+            printf("Enter the price:\t\n");
+            scanf("%f",&ord.itm[i].price);
+            total +=ord.itm[i].price*ord.itm[i].qty;
+            
+        }
+        billHeader(ord.customer,ord.date);
+        int i;
+        for(i=0;i<n;i++){
+            billBody(ord.itm[i].items,ord.itm[i].qty,ord.itm[i].price);
+
+                }
+        billtotal(total);
+    
+
+        
+    }
+}
